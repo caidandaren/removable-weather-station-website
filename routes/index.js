@@ -6,29 +6,39 @@ var client = new cassandra.Client({ contactPoints: ['localhost'],keyspace: 'zapd
 /* GET home page. */
 
 router.get('/realTime', function(req, res, next) {
-    var Hum,Tem,Lux;
-    client.execute('select value,ts from data_month where key = 3 and month = 569 ORDER BY ts DESC limit 1 ;', function (err, result) {
+    var Hum,Tem,Lum;
+    client.execute('select value,ts from data_month where key = 2 and month = 570 ORDER BY ts DESC limit 1 ;', function (err, result) {
         if (err) {
             return console.error('There was while trying to retrieve data from system.local', err);
         }else {
-            Hum=result.toString();
+	    Hum=result.rows[0].value;
         }
     });
-    client.execute('select value,ts from data_month where key = 4 and month = 569 ORDER BY ts DESC limit 1 ;', function (err, result) {
+    client.execute('select value,ts from data_month where key = 3 and month = 570 ORDER BY ts DESC limit 1 ;', function (err, result) {
+        if (err){
+            return console.error('There was while trying to retrieve data from system.local', err);
+        }else {
+            Tem=result.rows[0].value; 
+         }
+    });
+    client.execute('select value,ts from data_month where key = 4 and month = 570 ORDER BY ts DESC limit 1 ;', function (err, result) {
         if (err) {
             return console.error('There was while trying to retrieve data from system.local', err);
         }else {
-            Tem=result.toString();
+            Lum=result.rows[0].value;
+            Time=result.rows[0].ts;
+	    Car=95;
+	    if(Lum>50 && Hum>70){
+	    Wea='雨';} 
+            else if(Lum>50){
+	    Wea='阴';}
+	    else{
+	    Wea='晴';}
+	    if(Hum !=undefined&& Tem != undefined){
+            res.render('index',{Hum:Hum, Tem:Tem, Lum:Lum, Car:Car, Wea:Wea,Time:Time, title:'realtime'});
+            } 
         }
     });
-    client.execute('select value,ts from data_month where key = 5 and month = 569 ORDER BY ts DESC limit 1 ;', function (err, result) {
-        if (err) {
-            return console.error('There was while trying to retrieve data from system.local', err);
-        }else {
-            Lux=result.toString();
-        }
-    });
-    res.render('index',{Hum:Hum , Tem: Tem, Lux: Lux, title: 'hhss'});
 });
 
 router.get('/past', function(req, res, next) {
