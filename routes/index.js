@@ -6,6 +6,7 @@ var client = new cassandra.Client({ contactPoints: ['localhost'],keyspace: 'zapd
 /* GET home page. */
 
 router.get('/realTime', function(req, res, next) {
+    var Hum,Tem,Lux;
     client.execute('select value,ts from data_month where key = 3 and month = 569 ORDER BY ts DESC limit 1 ;', function (err, result) {
         if (err) {
             return console.error('There was while trying to retrieve data from system.local', err);
