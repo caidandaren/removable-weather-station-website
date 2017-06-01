@@ -48,13 +48,21 @@ block content
     #Cassandra(style='margin-top:10px')
         table.table
             tr
-                th #
-                td user_name
-                td money
-            each result0 in result
+                th ID
+                td 温度
+                td 湿度
+                td 光敏
+                td PM2.5
+                td 预测天气
+                td 时间
+            - for (var i=0;i<10;i++)
                 tr
-                    th=result0.id
-                    td=result0.user_name
-                    td=result0.money
+                    th 1
+                    td=Tem[i]
+                    td=Hum[i]
+                    td=Lum[i]
+                    td=Car[i]
+                    td=Wea[i]
+                    td=Time[i]
 
     #redis
