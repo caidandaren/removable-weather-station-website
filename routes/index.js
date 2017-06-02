@@ -35,18 +35,23 @@ router.get('/realTime', function(req, res, next) {
 	    else{
 	    Wea='晴';}
 	    if(Hum !=undefined&& Tem != undefined){
-            res.render('index',{Hum:Hum, Tem:Tem, Lum:Lum, Car:Car, Wea:Wea,Time:Time, title:'realtime'});
+            res.render('past',{Hum:Hum, Tem:Tem, Lum:Lum, Car:Car, Wea:Wea,Time:Time, title:'realtime'});
             } 
         }
     });
 });
 
 router.get('/past', function(req, res, next) {
-    var Hum,Tem,Lum=new Array();
     client.execute('select value,ts from data_month where key = 2 and month = 570 ORDER BY ts DESC limit 60 ;', function (err, result) {
         if (err) {
             return console.error('There was while trying to retrieve data from system.local', err);
         }else {
+	    var Hum=[];
+	    var Tem=[];
+	    var Lum=[];
+	    var Wea=[];
+	    var Time=[];
+	    var Car=[]; 
             for (var i = 0 ; i <10;i++)
             {
                 Hum[i]=result.rows[6*i].value;
@@ -73,8 +78,8 @@ router.get('/past', function(req, res, next) {
                                 else{
                                     Wea[i]='晴';}
                                 Time[i]=result.rows[6*i].ts;
+				Car[i]=95;
                             }
-                            Car=95;
                             if(Hum !=undefined&& Tem != undefined){
                                 res.render('index',{Hum:Hum, Tem:Tem, Lum:Lum, Car:Car, Wea:Wea,Time:Time, title:'realtime'});
                             }
