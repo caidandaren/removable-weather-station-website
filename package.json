@@ -1,21 +1,36 @@
 {
-  "name": "ws",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
+  "name": "removable-weather-station-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "dependencies": {
-    "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.3",
-    "express": "~4.15.2",
-    "jade": "~1.11.0",
-    "morgan": "~1.8.1",
+    "cassandra-driver": "^3.2.1",
+    "bootstrap": "^4.0.0-alpha.6",
+    "cookie-parser": "^1.4.3",
     "nodemailer": "^4.0.1",
+<<<<<<< HEAD
     "serve-favicon": "~2.4.2"
   }
   "engines": {
     "node": "7.2.1"    // You can use any version
   }
+=======
+    "redis": "^2.7.1",
+    "redis-connector": "^0.0.0-deprecate"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caidandaren/removable-weather-station-website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/caidandaren/removable-weather-station-website/issues"
+  },
+  "homepage": "https://github.com/caidandaren/removable-weather-station-website#readme"
+>>>>>>> 1bd29695b0042647faf7dfdc3c244468454c2445
 }
