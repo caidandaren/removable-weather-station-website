@@ -15,4 +15,7 @@
     "nodemailer": "^4.0.1",
     "serve-favicon": "~2.4.2"
   }
+  "engines": {
+    "node": "7.2.1"    // You can use any version
+  }
 }

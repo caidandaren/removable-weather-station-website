@@ -23,44 +23,44 @@ router.get('/realTime', function(req, res, next) {
             return console.error('There was while trying to retrieve data from system.local', err);
         }else {
 	    Hum=result.rows[0].value;
-        }
-    });
-    client.execute('select value,ts from data_month where key = 3 and month = 570 ORDER BY ts DESC limit 1 ;', function (err, result) {
-        if (err){
-            return console.error('There was while trying to retrieve data from system.local', err);
-        }else {
-            Tem=result.rows[0].value; 
-         }
-    });
-    client.execute('select value,ts from data_month where key = 4 and month = 570 ORDER BY ts DESC limit 1 ;', function (err, result) {
-        if (err) {
-            return console.error('There was while trying to retrieve data from system.local', err);
-        }else {
-            Lum=result.rows[0].value;
-            Time=result.rows[0].ts;
-	    Car=95;
-	    if(Lum>50 && Hum>70){
-	    Wea='雨';} 
-            else if(Lum>50){
-	    Wea='阴';}
-	    else{
-	    Wea='晴';}
+            client.execute('select value,ts from data_month where key = 3 and month = 570 ORDER BY ts DESC limit 1 ;', function (err, result) {
+                if (err){
+                    return console.error('There was while trying to retrieve data from system.local', err);
+                }else {
+                    Tem=result.rows[0].value;
+                    client.execute('select value,ts from data_month where key = 4 and month = 570 ORDER BY ts DESC limit 1 ;', function (err, result) {
+                        if (err) {
+                            return console.error('There was while trying to retrieve data from system.local', err);
+                        }else {
+                            Lum=result.rows[0].value;
+                            Time=result.rows[0].ts;
+                            Car=95;
+                            if(Lum>50 && Hum>70){
+                                Wea='雨';}
+                            else if(Lum>50){
+                                Wea='阴';}
+                            else{
+                                Wea='晴';}
 
-        transporter.sendMail({
-            from: 'ws ', // sender address
-            to: 'zhan1xiao2no3@sjtu.edu.com', // list of receivers
-            subject: 'The temperature is too high!', // Subject line
-            text: 'The temperature now is'+Tem, // plaintext body
-        }, function(error, info){
-            if(error){
-                console.log(error);
-            }else{
-                console.log('Message sent: ' + info.response);
-            }
-        });
-	    if(Hum !=undefined&& Tem != undefined){
-            res.render('past',{Hum:Hum, Tem:Tem, Lum:Lum, Car:Car, Wea:Wea,Time:Time, title:'realtime'});
-            } 
+                            transporter.sendMail({
+                                from: 'ws ', // sender address
+                                to: 'zhan1xiao2no3@sjtu.edu.com', // list of receivers
+                                subject: 'The temperature is too high!', // Subject line
+                                text: 'The temperature now is '+Tem, // plaintext body
+                            }, function(error, info){
+                                if(error){
+                                    console.log(error);
+                                }else{
+                                    console.log('Message sent: ' + info.response);
+                                }
+                            });
+                            if(Hum !=undefined&& Tem != undefined){
+                                res.render('past',{Hum:Hum, Tem:Tem, Lum:Lum, Car:Car, Wea:Wea,Time:Time, title:'realtime'});
+                            }
+                        }
+                    });
+                }
+            });
         }
     });
 });
