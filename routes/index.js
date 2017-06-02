@@ -4,6 +4,17 @@ var cassandra = require('cassandra-driver');
 var assert = require('assert');
 var client = new cassandra.Client({ contactPoints: ['localhost'],keyspace: 'zapdos'});
 /* GET home page. */
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+    service: '163',
+    port: 465, // SMTP 端口
+    secureConnection: true, // 使用 SSL
+    auth: {
+        user: 'xishetuozhan@163.com',
+        //这里密码不是qq密码，是你设置的smtp密码
+        pass: '123316547'
+    }
+});
 
 router.get('/realTime', function(req, res, next) {
     var Hum,Tem,Lum;
@@ -34,6 +45,19 @@ router.get('/realTime', function(req, res, next) {
 	    Wea='阴';}
 	    else{
 	    Wea='晴';}
+
+        transporter.sendMail({
+            from: 'ws ', // sender address
+            to: 'zhan1xiao2no3@sjtu.edu.com', // list of receivers
+            subject: 'The temperature is too high!', // Subject line
+            text: 'The temperature now is'+Tem, // plaintext body
+        }, function(error, info){
+            if(error){
+                console.log(error);
+            }else{
+                console.log('Message sent: ' + info.response);
+            }
+        });
 	    if(Hum !=undefined&& Tem != undefined){
             res.render('past',{Hum:Hum, Tem:Tem, Lum:Lum, Car:Car, Wea:Wea,Time:Time, title:'realtime'});
             } 
