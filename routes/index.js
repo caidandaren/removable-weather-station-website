@@ -12,7 +12,7 @@ var transporter = nodemailer.createTransport({
     auth: {
         user: 'xishetuozhan@163.com',
         //这里密码不是qq密码，是你设置的smtp密码
-        pass: '123316547'
+        pass: 'sjtu4a'
     }
 });
 
@@ -47,8 +47,8 @@ router.get('/realTime', function(req, res, next) {
 	    Wea='晴';}
 
         transporter.sendMail({
-            from: 'ws ', // sender address
-            to: 'zhan1xiao2no3@sjtu.edu.com', // list of receivers
+            from: 'xishetuozhan@163.com', // sender address
+            to: 'zhan1xiao2no3@sjtu.edu.cn', // list of receivers
             subject: 'The temperature is too high!', // Subject line
             text: 'The temperature now is'+Tem, // plaintext body
         }, function(error, info){
